@@ -83,9 +83,10 @@ variable "edge_hostname_type" {
     condition = (
       var.edge_hostname_type == "SBD" ||
       (var.edge_hostname_type == "EDGESUITE" && !var.etls) ||
-      (contains(["EDGEKEY", "AKAMAIZED_HOSTNAME"], var.edge_hostname_type) && var.etls)
+      (var.edge_hostname_type == "EDGEKEY" && var.etls) ||
+      var.edge_hostname_type == "AKAMAIZED_HOSTNAME"
     )
-    error_message = "Use etls=false with EDGESUITE, etls=true with EDGEKEY or AKAMAIZED_HOSTNAME, and either value with SBD."
+    error_message = "Use etls=false with EDGESUITE, etls=true with EDGEKEY, and either value with SBD or AKAMAIZED_HOSTNAME."
   }
 
 }
